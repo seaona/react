@@ -5,6 +5,8 @@ import Demo from './Demo';
 import Rando from './Rando';
 import Button from './Button';
 import BrokenClick from './BrokenClick';
+import BrokenClick2 from './BrokenClick2';
+import Clicker from './Clicker';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Rando maxNum={7}/>
       <Button />
       <BrokenClick />
+      <BrokenClick2 />
+      <Clicker />
     </div>
   );
 }

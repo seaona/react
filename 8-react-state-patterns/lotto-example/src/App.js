@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import RollDice from './RollDice';
+import Lottery from './Lottery';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-          <RollDice />
+          <Lottery />
+          <Lottery title="Mini Daily" numBalls={4} maxNum={10}/>
       </div>
     );
   }

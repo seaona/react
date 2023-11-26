@@ -3,11 +3,10 @@ import './Die.css';
 
 class Die extends Component {
     render() {
+        const dieIcon = `Die fas fa-dice-${this.props.face}
+        ${this.props.shaking && 'shaking'}`;
         return(
-            <div>
-                <div>die</div>
-                <i class="fas fa-dice-one"></i>
-            </div>
+                <i class={dieIcon}></i>
         )
 
     }

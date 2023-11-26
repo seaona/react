@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import RollDice from './RollDice';
+import ScoreKeeper from './ScoreKeeper';
+import IconList from './IconList';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-          <RollDice />
+          <ScoreKeeper />
+          <IconList />
       </div>
     );
   }

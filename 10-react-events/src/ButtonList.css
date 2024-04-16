@@ -1,0 +1,16 @@
+.ButtonList {
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.ButtonList button {
+    height: 60px;
+    margin-left: 20px;
+    font-size: large;
+    color: white;
+    border: none;
+}
+.ButtonList button:hover {
+    cursor: pointer
+}

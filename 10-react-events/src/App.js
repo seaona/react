@@ -5,6 +5,9 @@ import AnnoyingForm from './AnnoyingForm';
 import CopyDemo from './CopyDemo';
 import WiseSquareWithProps from './WiseSquareWithProps';
 import ExperimentalSquare from './ExperimentalSquare';
+import ButtonList from './ButtonList';
+import NumberList from './NumberList';
+import BetterNumberList from './BetterNumberList';
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
       <CopyDemo />
       <WiseSquareWithProps />
       <ExperimentalSquare />
+      <ButtonList />
+      <NumberList />
+      <BetterNumberList />
     </div>
   );
 }

@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# REACT
+## 10. React Events
+### Events and Binding 'this'
+Three ways of binding `this` on a component `<div onMouseEnter={this.dispenseWisdom}>`:
+- **Solution 1**: bind it inline `onMouseEnter=this.dispenseWisdom.bind(this)`, but everytime we render the component, a new function is created, so it's not very efficient
+- **Solution 2**: use inline arrow function `onMouseEnter={() => this.dispenseWisdom()}`, it also creates a new function everytime
+- **Solution 3 (good)**: bind it in props above. It's more performant and we only bind once
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```
+constructor(props) {
+    super(props);
+    this.dispenseWisdom = this.dispenseWisdom.bind(this);
+}
+```
+    
+### Passing Functions to Child Components
+- A very common pattern in React
+- The idea: children are often not stateful, but need to tell parents to change state
 
-## Available Scripts
+How data flows:
+- A parent component defines a function
+- The function is passed as a prop to a child component
+- The child component invokes the prop
+- The parent function is called, usually setting new state
+- The parent component is re-rendered along with its children
 
-In the project directory, you can run:
+Where to bind:
+- The higher the better - don't bind in the child component if not needed
+- If you need a parameter, pass it down to the child as a prop, then bind in parent and child
+- Avoid inline arrow functions / binding if possible
+- No need to bind in the constructor **and** make an inline function
 
-### `npm start`
+### Naming Conventions
+- For consistency, try to follow the `action / handleAction` pattern
+    - In the parent, give the function a name corresponding to the behaviour (remove, add, open, toggle...)
+    - In the child, use the name of the action along with handle to name the event handler (handleRemove, handleAdd...)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Lists and Keys
+- **key** is a special string attr to include when creating lists of elements
+- They help React identify which items have changed, are added or are removed
+- They need to be unique
+- Picking a key: use string that uniquely identifies item among siblings. Most often you would use IDs from your data as keys:
+    - `this.state.todos.map(todo => <li key={todo.id}>)`
+- If you don't have stable ids you may use the iteration index as a key as a last resort. But we should not use this if the item order may change or items can be deleted. This can cause performance problems or bugs with component state. **Index as keys are an anit-pattern**
+    - `this.state.todos.map((todo, index) => <li key={index}>)`
+- Use libraries `shortids` or `uuid` npm libraries

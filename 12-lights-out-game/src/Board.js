@@ -33,12 +33,12 @@ class Board extends Component {
   static defaultProps = {
     nrows: 5,
     ncols: 5,
-    chanceLightStartsOn: 3,
+    chanceLightStartsOn: 0.1,
   }
 
   constructor(props) {
     super(props);
-    // TODO: set initial state
+
     this.state = {
       board: this.createBoard(),
       hasWon: false,
@@ -49,11 +49,10 @@ class Board extends Component {
 
   createBoard() {
     let board = [];
-    // TODO: create array-of-arrays of true/false values
     for (let i=0; i<this.props.nrows; i++) {
       let row = [];
       for (let j=0; j<this.props.ncols; j++) {
-        row.push(null);
+        row.push(Math.random() < this.props.chanceLightStartsOn);
       }
       board.push(row)
     } 
@@ -76,36 +75,58 @@ class Board extends Component {
       }
     }
 
-    // TODO: flip this cell and the cells around it
+    flipCell(y,x);
+    flipCell(y,x-1);
+    flipCell(y,x+1);
+    flipCell(y-1,x);
+    flipCell(y+1,x);
 
     // win when every cell is turned off
-    // TODO: determine is the game has been won
+    let hasWon = board.every(row => row.every(cell => !cell));
 
-    //this.setState({board, hasWon});
+    this.setState({board, hasWon});
   }
 
 
   /** Render game board or winning message. */
 
   render() {
+    if(this.state.hasWon) {
+      return (
+        <div className="Board-title">
+          <div className="winner">
+            <span className="neon-orange">YOU</span>
+            <span className="neon-blue">WIN!</span>
+        </div>
+      </div>
+      )
+    }
 
-    // if the game is won, just show a winning msg & render nothing else
+    let tblBoard = [];
+    for (let y=0; y < this.props.nrows; y++) {
+      let row = [];
+      for (let x=0; x < this.props.ncols; x++) {
+        let coord = `${y}-${x}`;
+        row.push(<Cell
+          key={coord}
+          isLit={this.state.board[y][x]}
+          flipCellsAroundMe={() => this.flipCellsAround(coord)}
+        />)
+      }
+      tblBoard.push(<tr key={y}>{row}</tr>)
+    }
 
-    // TODO
-
-    // make table board
-
-    // TODO
     return(
-      <table className="Board">
-      <tbody>
-        <tr>
-          <Cell isLit={true} ></Cell>
-          <Cell isLit={false}></Cell>
-          <Cell isLit={true}></Cell>
-        </tr>
-      </tbody>
-    </table>
+      <div>
+        <div className="Board-title">
+          <div className="neon-orange">Lights</div>
+          <div className="neon-blue">Out</div>
+        </div>
+        <table className="Board">
+            <tbody>{tblBoard}</tbody>
+        </table>
+      </div>
+
     )
 
   }

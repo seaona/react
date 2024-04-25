@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './Todo.css'
 
 class Todo extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class Todo extends Component {
         this.toggleForm = this.toggleForm.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
     }
 
     handleRemove() {
@@ -36,12 +38,16 @@ class Todo extends Component {
         });
     }
 
+    handleToggle() {
+        this.props.toggleTodo(this.props.id);
+    }
+
     render() {
         let result;
         if(this.state.isEditing) {
             result = (
-                <div>
-                    <form onSubmit={this.handleUpdate}>
+                <div className='Todo'>
+                    <form className='Todo-edit-form' onSubmit={this.handleUpdate}>
                         <input
                             type='text'
                             value={this.state.task}
@@ -54,10 +60,23 @@ class Todo extends Component {
             )
         } else {
             result = (
-                <div>
-                    <button onClick={this.toggleForm}>Edit</button>
-                    <button onClick={this.handleRemove}>X</button>
-                    <li>{this.props.task}</li>
+                <div className="Todo">
+                    <li
+                        className={this.props.completed ? 'Todo-task completed' : 'Todo-task'}
+                        onClick={this.handleToggle}    
+                    >
+                        {this.props.task}
+                    </li>
+                    <div className="Todo-buttons">
+                        <button onClick={this.toggleForm}>
+                            <i class='fas fa-pen' />
+                        </button>
+
+                        <button onClick={this.handleRemove}>
+                            <i class='fas fa-trash' />
+                        </button>
+                    </div>
+
                 </div>
             )
         }

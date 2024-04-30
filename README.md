@@ -76,3 +76,23 @@ let catData = {
 - Using an interation index as a key is a bad idea
 - No natural unique key? Use a library to create a uuid
 - `npm i uuid`
+
+## 17. Lifecycle Methods
+### React Component Lifecycle
+- Every component comes with methods that allow developers to update application state and reflect the changes to the UI before/after key react 'events'
+- There are 3 main phases:
+    - mounting
+    - updating
+    - unmounting
+
+- **constructor()**: often used for initializing state or binding event handlers to class instances
+- **render()**: after the constructor, React calls render(). It tells React what should be displayed. React updates the DOM to match the output of render().
+- **componentDidMount**: it will run after the constructor and the 1st render.
+
+### ComponentDidMount
+- Mounting is the first time the component is rendered to DOM
+- It is a good place to load any data via AJAX or set up subscriptions/timers
+- Calling `setState()` here it triggers a re-render, so be cautios
+- We should not `setState` in the constructor never
+
+### ComponentDidUpdate

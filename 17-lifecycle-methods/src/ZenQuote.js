@@ -4,12 +4,14 @@ import './ZenQuote.css'
 class ZenQuote extends Component {
     // 1st this is called
     constructor(props) {
+        console.log("INSIDE THE CONSTRUCTOR");
         super(props);
         this.state = {quote: '', isLoaded: false};
     }
 
     // 3rd this is called
     componentDidMount() {
+        console.log("COMPONENT DID MOUNT")
         // load data
         // set state with that data
         axios.get("https://api.github.com/zen").then(response => {
@@ -23,8 +25,13 @@ class ZenQuote extends Component {
         });
     }
 
+    componentDidUpdate() {
+        console.log("COMPONENT DID UPDATE")
+    }
+
     // 2nd this is called - and called again everytime state is updated
     render() {
+        console.log("INSIDE RENDER");
         return (
             <div>
                 {this.state.isLoaded ? (

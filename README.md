@@ -96,3 +96,19 @@ let catData = {
 - We should not `setState` in the constructor never
 
 ### ComponentDidUpdate
+- Events that cause a re-render:
+    - New props
+    - setState()
+    - forceUpdate(): when you have some external data and you want to manually force a re-render
+- Once this happens, everytime a component is updated, the componentDidUpdate is called
+- This is a suitable place to implement any side effect operations
+    - syncing up with localStorage
+    - auto-saving
+    - updating DOM for uncontrolled components
+- You can compare the previous and current props and state `componentDidUpdate(prevProps, prevState)`
+
+
+### ComponentWillUnmount
+- It's called right before a component is unmounted/removed from the page
+- To perfrom any necessary cleanup, such as invalidating timers, canceling network requests, or cleaning up any subscriptions that were created in `componentDidMount()`
+- Calling `setState` here is useless, since there will be no re-rendering after this. Ie `clearInterval(this.timerId)`

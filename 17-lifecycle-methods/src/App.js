@@ -6,10 +6,12 @@ import GithubUserInfo from './GithubUserInfo';
 function App() {
   return (
     <div className="App">
-      <GithubUserInfo username="facebook"/>
-      <GithubUserInfo username="colt"/>
+      <ZenQuote />
+      
     </div>
   );
 }
 
 export default App;
+// <GithubUserInfo username="facebook"/>
+// <GithubUserInfo username="colt"/>

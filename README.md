@@ -112,3 +112,10 @@ let catData = {
 - It's called right before a component is unmounted/removed from the page
 - To perfrom any necessary cleanup, such as invalidating timers, canceling network requests, or cleaning up any subscriptions that were created in `componentDidMount()`
 - Calling `setState` here is useless, since there will be no re-rendering after this. Ie `clearInterval(this.timerId)`
+
+
+### Side Notes
+- **Window.localStorage**: we can only store strings
+    - We can add items: `window.localStorage.setItem("color", "blue")`
+    - We can call items: `window.localStorage.getItem("color")`
+    - We clear it: `window.localStorage.clear()`

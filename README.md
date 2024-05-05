@@ -113,6 +113,20 @@ let catData = {
 - To perfrom any necessary cleanup, such as invalidating timers, canceling network requests, or cleaning up any subscriptions that were created in `componentDidMount()`
 - Calling `setState` here is useless, since there will be no re-rendering after this. Ie `clearInterval(this.timerId)`
 
+## 20. React Router
+- Server-Side Routing
+    - Click on a link, send a request on the backend and returns the corresponding page which replace the entire DOM
+    - The server decides what HTML to return based on the URL requested
+- Client-Side Routing
+    - The page never refreshes, but we see different contents
+    - But we don't get URLs, we can't go forward and backwards and we don't have a way to bookmark a page on the site
+    - **Single Page Applications**
+    - `npm i react-router-dom`
+- We use Link instead of anchor tag a, so the page does not reloads
+- We use NavLink for having the additional feature of styling the currently selected link (active)
+- Old React Router
+    - `component` --> now `element`
+    - `render` for not instantiated the component everytime --> now `element`+ useMemo() hook
 
 ### Side Notes
 - **Window.localStorage**: we can only store strings

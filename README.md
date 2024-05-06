@@ -133,3 +133,5 @@ let catData = {
     - We can add items: `window.localStorage.setItem("color", "blue")`
     - We can call items: `window.localStorage.getItem("color")`
     - We clear it: `window.localStorage.clear()`
+- Wrap an element with another to use the same styles
+    - `{this.props.children}` to show the children content

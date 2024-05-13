@@ -128,6 +128,40 @@ let catData = {
     - `component` --> now `element`
     - `render` for not instantiated the component everytime --> now `element`+ useMemo() hook
 
+## 22. React Router Patterns
+- Anti-pattern:
+
+```
+<Route path="/food/tacos render{() => <Food name="tacos" />}>
+<Route path="/food/salad render{() => <Food name="salad" />}>
+<Route path="/food/sushi render{() => <Food name="sushi" />}>
+```
+
+- Instead use: `useParams`
+
+```
+      <Routes >
+        <Route
+          exact
+          path="/food/:name"
+          element={<Food/>}
+        />
+      </Routes>
+
+and this in the component:
+
+import { useParams } from 'react-router-dom';
+
+function Food() {
+  const { name } = useParams();
+```
+
+- History vs Redirect
+    - redirect: no history. Using when there is an error
+    - history.push: there is history of prev route
+
+- withRouter Higher Order Component
+
 ### Side Notes
 - **Window.localStorage**: we can only store strings
     - We can add items: `window.localStorage.setItem("color", "blue")`

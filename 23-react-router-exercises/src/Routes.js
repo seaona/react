@@ -1,12 +1,28 @@
 import React from 'react';
+import { Route, Routes, useParams, Navigate } from 'react-router-dom';
+import DogList from './DogList';
+import DogDetails from './DogDetails';
 
-function Routes(props) {
-    const { dogs } = props;
+function CustomRoutes(props) {
+    const GetDog = ({ dogs }) => {
+        const { name } = useParams();
+        const currentDog = dogs.find(dog => dog.name.toLowerCase() === name.toLowerCase());
+        return <DogDetails dog={currentDog} />
+    }
+
     return (
-        <div>
-            <Route path="" />
-        </div>
+        <Routes>
+            <Route
+            path='/dogs'
+            element={<DogList dogs={props.dogs}/>}
+            />
+            <Route
+            path='/dogs/:name'
+            element={<GetDog dogs={props.dogs} />}
+            />
+            <Route path='*' element={<Navigate to='/dogs' />} />
+      </Routes>
     )
 }
 
-export default Routes;
+export default CustomRoutes;

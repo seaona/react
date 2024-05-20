@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes, useParams } from 'react-router-dom';
 import Navbar from "./Navbar";
-import DogList from "./DogList";
-import DogDetails from "./DogDetails";
+import CustomRoutes from './Routes';
 import whiskey from "./images/whiskey.jpg";
 import tubby from "./images/tubby.jpg";
 import hazel from "./images/hazel.jpg";
@@ -46,24 +44,12 @@ class App extends Component {
     ]
   };
   render() {
-    const GetDog = ({ dogs }) => {
-      const { name } = useParams();
-      const currentDog = dogs.find(dog => dog.name.toLowerCase() === name.toLowerCase());
-      return <DogDetails dog={currentDog} />
-    }
-
     return (
       <div>
-        <Routes>
-          <Route
-            path='/dogs'
-            element={<DogList dogs={this.props.dogs}/>}
-          />
-          <Route
-            path='/dogs/:name'
-            element={<GetDog dogs={this.props.dogs} />}
-          />
-        </Routes>
+        <Navbar dogs={this.props.dogs}/>
+        <div className="container">
+          <CustomRoutes dogs={this.props.dogs}/>
+        </div>
       </div>
     );
   }

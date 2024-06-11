@@ -5,7 +5,8 @@
 }
 
 .Palette-colors {
-    height: 90%;
+    flex-grow: 1; /* Allows the Palette-colors to take up remaining space */
+    overflow: auto; /* Ensures it is scrollable if content overflows */
 }
 
 .Palette-footer {

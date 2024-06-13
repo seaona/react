@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes, useParams, useLocation, useNavigate } from 'react-router-dom';
 import Palette from './Palette';
 import PaletteList from './PaletteList';
 import seedColors from './seedColors';
@@ -14,7 +14,21 @@ function PaletteWrapper() {
 
   const generatedPalette = generatePalette(palette);
   return <Palette palette={generatedPalette} />;
+}
 
+function PaletteListWrapper(props) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = useParams();
+
+  return (
+    <PaletteList
+      {...props}
+      location={location}
+      navigate={navigate}
+      params={params}
+    />
+  );
 }
 
 class App extends Component {
@@ -24,7 +38,7 @@ class App extends Component {
         <Routes>
           <Route
             path="/"
-            element={<PaletteList palettes={seedColors}/>}
+            element={<PaletteListWrapper palettes={seedColors}/>}
           />
           <Route 
             path="/palette/:id"

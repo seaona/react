@@ -169,3 +169,5 @@ function Food() {
     - We clear it: `window.localStorage.clear()`
 - Wrap an element with another to use the same styles
     - `{this.props.children}` to show the children content
+
+- Event `e.stopPropagation`: the stopPropagation() method of the Event interface prevents further propagation of the current event in the capturing and bubbling phases

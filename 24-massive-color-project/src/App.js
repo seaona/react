@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Routes, useParams, useLocation, useNavigate } from 'react-router-dom';
 import Palette from './Palette';
 import PaletteList from './PaletteList';
+import SingleColorPalette from './SingleColorPalette';
 import seedColors from './seedColors';
 import { generatePalette } from './colorHelpers';
 
@@ -31,6 +32,17 @@ function PaletteListWrapper(props) {
   );
 }
 
+function SingleColorPaletteWrapper() {
+  const { id, colorId } = useParams();
+  const palette = seedColors.find(palette => palette.paletteId === id);
+  if (!palette) {
+    return <h1>Palette not found</h1>;
+  }
+
+  const generatedPalette = generatePalette(palette);
+  return <SingleColorPalette colorId={colorId} palette={generatedPalette} />;
+}
+
 class App extends Component {
   render() {
     return (
@@ -43,6 +55,10 @@ class App extends Component {
           <Route 
             path="/palette/:id"
             element={<PaletteWrapper/>}
+          />
+          <Route
+           path="/palette/:paletteId/:colorId"
+           element={<SingleColorPaletteWrapper />}
           />
         </Routes>
       </div>

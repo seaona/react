@@ -33,8 +33,9 @@ function PaletteListWrapper(props) {
 }
 
 function SingleColorPaletteWrapper() {
-  const { id, colorId } = useParams();
-  const palette = seedColors.find(palette => palette.paletteId === id);
+  const { paletteId, colorId } = useParams();
+
+  const palette = seedColors.find(palette => palette.id === paletteId);
   if (!palette) {
     return <h1>Palette not found</h1>;
   }

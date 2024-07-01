@@ -3,6 +3,7 @@ import { Route, Routes, useParams, useLocation, useNavigate } from 'react-router
 import Palette from './Palette';
 import PaletteList from './PaletteList';
 import SingleColorPalette from './SingleColorPalette';
+import NewPaletteForm from './NewPaletteForm';
 import seedColors from './seedColors';
 import { generatePalette } from './colorHelpers';
 
@@ -49,6 +50,10 @@ class App extends Component {
     return (
       <div>
         <Routes>
+          <Route
+            path="/palette/new"
+            element={<NewPaletteForm/>}
+          />
           <Route
             path="/"
             element={<PaletteListWrapper palettes={seedColors}/>}

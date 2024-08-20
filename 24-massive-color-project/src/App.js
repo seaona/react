@@ -7,9 +7,9 @@ import NewPaletteForm from './NewPaletteForm';
 import seedColors from './seedColors';
 import { generatePalette } from './colorHelpers';
 
-function PaletteWrapper() {
+function PaletteWrapper({ palettes }) {
   const { id } = useParams();
-  const palette = seedColors.find(palette => palette.id === id);
+  const palette = palettes.find(palette => palette.id === id);
   if (!palette) {
     return <h1>Palette not found</h1>;
   }
@@ -33,10 +33,10 @@ function PaletteListWrapper(props) {
   );
 }
 
-function SingleColorPaletteWrapper() {
+function SingleColorPaletteWrapper({ palettes }) {
   const { paletteId, colorId } = useParams();
 
-  const palette = seedColors.find(palette => palette.id === paletteId);
+  const palette = palettes.find(palette => palette.id === paletteId);
   if (!palette) {
     return <h1>Palette not found</h1>;
   }
@@ -46,25 +46,42 @@ function SingleColorPaletteWrapper() {
 }
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      palettes: seedColors,
+    }
+    this.savePalette = this.savePalette.bind(this);
+  }
+
+  savePalette(newPalette) {
+    this.setState({
+      palettes: [...this.state.palettes, newPalette]
+    })
+  }
+
   render() {
     return (
       <div>
         <Routes>
           <Route
             path="/palette/new"
-            element={<NewPaletteForm/>}
+            element={<NewPaletteForm
+              savePalette={this.savePalette}
+              palettes={this.state.palettes}
+            />}
           />
           <Route
             path="/"
-            element={<PaletteListWrapper palettes={seedColors}/>}
+            element={<PaletteListWrapper palettes={this.state.palettes}/>}
           />
           <Route 
             path="/palette/:id"
-            element={<PaletteWrapper/>}
+            element={<PaletteWrapper  palettes={this.state.palettes}/>}
           />
           <Route
            path="/palette/:paletteId/:colorId"
-           element={<SingleColorPaletteWrapper />}
+           element={<SingleColorPaletteWrapper  palettes={this.state.palettes}/>}
           />
         </Routes>
       </div>

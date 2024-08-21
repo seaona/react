@@ -11,7 +11,8 @@ import { AppBar, CssBaseline, Toolbar } from '@mui/material';
 import { ChromePicker } from 'react-color';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Navigate } from 'react-router-dom';
-import DraggableColorBox from './DraggableColorBox';
+import {arrayMoveImmutable} from 'array-move';
+import DraggableColorList from './DraggableColorList';
 
 const drawerWidth = 400;
 
@@ -70,13 +71,17 @@ const styles = theme => ({
   });
 
 class NewPaletteForm extends Component {
+    static defaultProps = {
+      maxColors: 20,
+    }
+
     constructor(props) {
         super(props);
         this.state = {
           open: true,
           currentColor: "teal",
           newColorName: "",
-          colors: [],
+          colors: this.props.palettes[0].colors,
           redirect: false,
           newPaletteName: "",
         };
@@ -86,6 +91,9 @@ class NewPaletteForm extends Component {
         this.addNewColor = this.addNewColor.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.removeColor = this.removeColor.bind(this);
+        this.clearColors = this.clearColors.bind(this);
+        this.addRandomColor = this.addRandomColor.bind(this);
     }
 
     componentDidMount() {
@@ -137,6 +145,18 @@ class NewPaletteForm extends Component {
       })
     }
 
+    clearColors() {
+      this.setState({ colors: [] });
+    }
+
+    addRandomColor() {
+      // pick random color from existing palettes
+      const allColors = this.props.palettes.map(p => p.colors).flat();
+      var rand = Math.floor(Math.random() * allColors.length);
+      const randomColor = allColors[rand];
+      this.setState({colors: [...this.state.colors, randomColor]});
+    }
+
     handleSubmit() {
       let newName = this.state.newPaletteName;
       const newPalette = {
@@ -149,9 +169,33 @@ class NewPaletteForm extends Component {
       this.setState({ redirect: true });
     }
 
+    removeColor(colorName) {
+      console.log("AAAA", colorName)
+      this.setState({
+        colors: this.state.colors.filter(color => color.name !== colorName)
+      });
+    }
+
+    // we don't have to bind because tt's using class property syntax
+
+    /* In modern JavaScript, particularly with the introduction of class properties syntax,
+    you can define methods as class properties, which allows you to avoid the need 
+    to explicitly bind them in the constructor.
+    This is because class property arrow functions automatically bind the method to the instance of the class
+
+    Arrow Functions and Lexical this: Arrow functions do not have their own this context. 
+    Instead, they inherit this from the surrounding lexical context, which in this case is the class instance
+    */
+    onSortEnd = ({oldIndex, newIndex}) => {
+      this.setState(({colors}) => ({
+        colors: arrayMoveImmutable(colors, oldIndex, newIndex),
+      }));
+    }
+
     render() {
-        const { classes } = this.props;
+        const { classes, maxColors } = this.props;
         const { open, colors, redirect } = this.state;
+        const paletteIsFull = colors.length >= maxColors;
 
         if (redirect) {
           return <Navigate to="/" />;
@@ -218,10 +262,19 @@ class NewPaletteForm extends Component {
                 Design Your Palette
               </Typography>
               <div>
-                <Button variant='contained' color='secondary'>
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  onClick={this.clearColors}
+                >
                   Clear Palette
                 </Button>
-                <Button variant='contained' color='primary'>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  disabled={paletteIsFull}
+                  onClick={this.addRandomColor}
+                >
                   Random Color
                 </Button>
               </div>
@@ -245,9 +298,10 @@ class NewPaletteForm extends Component {
                   variant='contained'
                   type='submit'
                   color='primary'
-                  style= {{ backgroundColor: this.state.currentColor }}
+                  disabled={paletteIsFull}
+                  style= {{ backgroundColor: paletteIsFull? "grey" : this.state.currentColor }}
                 >
-                  Add Color
+                  {paletteIsFull ? "Palette Full" : "Add Color"}
                 </Button>
               </ValidatorForm>
 
@@ -257,10 +311,13 @@ class NewPaletteForm extends Component {
                 [classes.contentShift]: open
               })}
             >
-              <div className={classes.drawerHeader} />
-                {colors.map(color => (
-                  <DraggableColorBox color={color.color} name={color.name} />
-                ))}
+            <div className={classes.drawerHeader} />
+            <DraggableColorList
+              colors={colors}
+              removeColor={this.removeColor}
+              axis='xy'
+              onSortEnd={this.onSortEnd}
+            />
             </main>
           </div>
         );

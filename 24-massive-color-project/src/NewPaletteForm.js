@@ -7,8 +7,6 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { ChromePicker } from 'react-color';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Navigate } from 'react-router-dom';
 import {arrayMoveImmutable} from 'array-move';
 import DraggableColorList from './DraggableColorList';
@@ -134,13 +132,9 @@ class NewPaletteForm extends Component {
       this.setState({colors: [...this.state.colors, randomColor]});
     }
 
-    handleSubmit(newPaletteName) {
-      const newPalette = {
-        paletteName: newPaletteName,
-        id: newPaletteName.toLowerCase().replace(/ /g, "-"),
-        colors: this.state.colors,
-      }
-      
+    handleSubmit(newPalette) {
+      newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, "-");
+      newPalette.colors = this.state.colors;
       this.props.savePalette(newPalette);
       this.setState({ redirect: true });
     }

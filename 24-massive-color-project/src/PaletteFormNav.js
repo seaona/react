@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { AppBar, CssBaseline, Toolbar } from '@mui/material';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import PaletteMetaForm from "./PaletteMetaForm";
 
 const drawerWidth = 400;
 
@@ -19,6 +20,10 @@ const styles = theme => ({
            easing: theme.transitions.easing.sharp,
            duration: theme.transitions.duration.leavingScreen
          }),
+         flexDirection: "row",
+         justifyContent: "center",
+         alignItems: "center",
+         height: "64px"
 
     },
     appBarShift: {
@@ -28,24 +33,35 @@ const styles = theme => ({
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen
         }),
-        flexDirection: "row",
     },
     menuButton: {
         marginRight: 12,
         marginLeft: 20,
     },
     navBtns: {
-
-    }
+        marginRight: '1rem',
+        "&a": {
+            textDecoration: "none",
+        }
+    },
+    buttons: {
+        margin: '0 0.5rem',
+        "&a": {
+            textDecoration: "none"
+        }
+    },
 })
 class PaletteFormNav extends Component {
     constructor(props) {
         super(props);
         this.state = {
             newPaletteName: "",
+            formShowing: false,
 
         }
         this.handleChange = this.handleChange.bind(this);
+        this.showForm = this.showForm.bind(this);
+        this.hideForm = this.hideForm.bind(this);
      }
 
     componentDidMount() {
@@ -62,8 +78,20 @@ class PaletteFormNav extends Component {
         })
     }
 
+    showForm() {
+        this.setState({
+            formShowing: true
+        });
+    }
+
+    hideForm() {
+        this.setState({
+            formShowing: false
+        });
+    }
+
     render() {
-        const { classes, open } = this.props;
+        const { classes, open, palettes, handleSubmit } = this.props;
         const { newPaletteName } = this.state;
         return (
             <div className={classes.root}>
@@ -90,30 +118,21 @@ class PaletteFormNav extends Component {
                         </Typography>
                     </Toolbar>
                     <div className={classes.navBtns}>
-                            <ValidatorForm
-                                onSubmit={() => this.props.handleSubmit(newPaletteName)}
-                            >
-                            <TextValidator
-                                label='Palette Name'
-                                value={this.state.newPaletteName}
-                                name="newPaletteName"
-                                onChange={this.handleChange}
-                                validators={["required", "isPaletteNameUnique"]}
-                                errorMessages={["Enter Palette Name", "Name already taken"]}
-                            />
-                            <Button 
-                                variant='contained'
-                                color='primary'
-                                type="submit"
-                            >
-                                Save Palette
-                            </Button>
                             <Link to='/'>
-                                <Button variant='contained' color='secondary'>Go Back</Button>
+                                <Button variant='contained' color='secondary' className={classes.buttons}>Go Back</Button>
                             </Link>
-                            </ValidatorForm>
+                            <Button variant="contained" onClick={this.showForm} className={classes.buttons}>
+                                Save
+                            </Button>
                         </div>
                 </AppBar>
+                {this.state.formShowing && 
+                    <PaletteMetaForm 
+                        palettes={palettes}
+                        handleSubmit={handleSubmit}
+                        hideForm={this.hideForm}
+                    />
+                }
             </div>
         )
      }

@@ -13,69 +13,13 @@ import DraggableColorList from './DraggableColorList';
 import PaletteFormNav from './PaletteFormNav';
 import ColorPickerForm from './ColorPickerForm';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
-const drawerWidth = 400;
+import styles from './styles/NewPaletteFormStyles'
 
 const theme = createTheme({
 
   // Define your theme here
 
 });
-
-const styles = theme => ({
-    root: {
-      display: "flex"
-    },
-/*     appBar: {
-        transition: theme.transitions.create(["margin", "width"], {
-           easing: theme.transitions.easing.sharp,
-           duration: theme.transitions.duration.leavingScreen
-         })
-    }, */
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-      height: "100vh"
-    },
-    drawerPaper: {
-      width: drawerWidth,
-      display: "flex",
-      alignItems: "center"
-    },
-    drawerHeader: {
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      padding: "0 8px",
-      justifyContent: "flex-end"
-    },
-    content: {
-      flexGrow: 1,
-      height: "calc(100vh - 64px)",
-      padding: "30px",
-      marginTop: "64px",
-      marginLeft: -drawerWidth
-    },
-    contentShift: {
-
-      marginLeft: 0
-    },
-    container: {
-      width: "90%",
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center"
-    },
-    buttons: {
-      width: "100%"
-    },
-    button: {
-      width: "50%"
-    },
-  });
-
 class NewPaletteForm extends Component {
     static defaultProps = {
       maxColors: 20,

@@ -4,53 +4,11 @@ import classNames from "classnames";
 import { withStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { AppBar, CssBaseline, Toolbar } from '@mui/material';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import PaletteMetaForm from "./PaletteMetaForm";
+import styles from './styles/PaletteFormNavStyles'
 
-const drawerWidth = 400;
-
-const styles = theme => ({
-    root: {
-        display: 'flex',
-    },
-    appBar: {
-        transition: theme.transitions.create(["margin", "width"], {
-           easing: theme.transitions.easing.sharp,
-           duration: theme.transitions.duration.leavingScreen
-         }),
-         flexDirection: "row",
-         justifyContent: "center",
-         alignItems: "center",
-         height: "64px"
-
-    },
-    appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        transition: theme.transitions.create(["margin", "width"], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen
-        }),
-    },
-    menuButton: {
-        marginRight: 12,
-        marginLeft: 20,
-    },
-    navBtns: {
-        marginRight: '1rem',
-        "&a": {
-            textDecoration: "none",
-        }
-    },
-    buttons: {
-        margin: '0 0.5rem',
-        "&a": {
-            textDecoration: "none"
-        }
-    },
-})
 class PaletteFormNav extends Component {
     constructor(props) {
         super(props);
@@ -63,14 +21,6 @@ class PaletteFormNav extends Component {
         this.showForm = this.showForm.bind(this);
         this.hideForm = this.hideForm.bind(this);
      }
-
-    componentDidMount() {
-      ValidatorForm.addValidationRule('isPaletteNameUnique', (value) => {
-        return this.props.palettes.every(
-           ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
-         );
-      });
-    }
 
     handleChange(e) {
         this.setState({
@@ -104,15 +54,13 @@ class PaletteFormNav extends Component {
                     })}
                 >
                     <Toolbar disableGutters={!open}>
-                        <IconButton
+                        <ChevronRightIcon
                             color="inherit"
                             aria-label="Open drawer"
                             onClick={this.props.handleDrawerOpen}
                             className={classNames(classes.menuButton, open && classes.hide)}
-                            style={{backgroundColor: "#fff", border: "1px solid #ccc"}}
                         >
-                            <IconButton />
-                        </IconButton>
+                        </ChevronRightIcon>
                         <Typography variant="h6" color="inherit" noWrap>
                             Create a Palette
                         </Typography>

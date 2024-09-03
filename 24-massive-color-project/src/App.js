@@ -97,6 +97,10 @@ class App extends Component {
            path="/palette/:paletteId/:colorId"
            element={<SingleColorPaletteWrapper  palettes={this.state.palettes}/>}
           />
+          <Route
+           path="*"
+           element={<PaletteListWrapper palettes={this.state.palettes} deletePalette={this.deletePalette}/>}
+           />
         </Routes>
       </div>
     );

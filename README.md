@@ -162,6 +162,19 @@ function Food() {
 
 - withRouter Higher Order Component
 
+## 24. Re-renders
+- `shouldComponentUpdate(nextProps, nextState)`: we can say, if the nextProps are the same as the current props, return false, and do not re-render
+- `PureComponent`: it's a top level React piece, that we can extend, instead of `Component`, and it implements shouldComponentUpdate with a shallow prop and state comparison. So it won't re-render if props and state are the same
+
+## 25. React Hooks
+- Allow you to write functional components with all the features of class based components.
+- `useState` it returns 2 things:
+  - an object, which is a reference to the piece of state
+  - a function to update that piece of state
+- `componentDidMount` ... don't work on functional components, only on class based components, but we can use `useEffect` hook, to achieve the same effect
+  - `useEffect`: runs on every render
+  - you can have multiple useEffects
+
 ### Side Notes
 - **Window.localStorage**: we can only store strings
     - We can add items: `window.localStorage.setItem("color", "blue")`

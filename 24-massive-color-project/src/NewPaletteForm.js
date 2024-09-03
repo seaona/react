@@ -14,6 +14,7 @@ import PaletteFormNav from './PaletteFormNav';
 import ColorPickerForm from './ColorPickerForm';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import styles from './styles/NewPaletteFormStyles'
+import seedColors from './seedColors';
 
 const theme = createTheme({
 
@@ -30,7 +31,7 @@ class NewPaletteForm extends Component {
         this.state = {
           open: true,
           newColorName: "",
-          colors: this.props.palettes[0].colors,
+          colors: seedColors[0].colors,
           redirect: false,
         };
         this.handleDrawerClose = this.handleDrawerClose.bind(this);
@@ -71,8 +72,17 @@ class NewPaletteForm extends Component {
     addRandomColor() {
       // pick random color from existing palettes
       const allColors = this.props.palettes.map(p => p.colors).flat();
-      var rand = Math.floor(Math.random() * allColors.length);
-      const randomColor = allColors[rand];
+      let rand;
+      let randomColor;
+      let isDuplicateColor = true;
+
+      while(isDuplicateColor) {
+        rand = Math.floor(Math.random() * allColors.length);
+        randomColor = allColors[rand];
+        isDuplicateColor = this.state.colors.some(
+          color => color.name === randomColor.name
+        )
+      }
       this.setState({colors: [...this.state.colors, randomColor]});
     }
 

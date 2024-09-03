@@ -7,7 +7,6 @@ import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { withStyles } from '@mui/styles';
 import Slider from 'rc-slider';
-
 import 'rc-slider/assets/index.css';
 import styles from './styles/NavbarStyles';
 

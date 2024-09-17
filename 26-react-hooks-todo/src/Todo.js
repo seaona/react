@@ -8,12 +8,12 @@ import Edit from '@mui/icons-material/Edit';
 import useToggle from "./hooks/useToggleState";
 import EditTodoForm from "./EditTodoForm";
 
-function Todo({ id, task, completed, removeTodo, toggleTodo }) {
+function Todo({ id, task, completed, removeTodo, toggleTodo, editTodo }) {
     const [isEditing, toggle] = useToggle(false);
 
     return (
-        <ListItem>
-            {isEditing ? <EditTodoForm /> :
+        <ListItem style={{ height: "64px" }}>
+            {isEditing ? <EditTodoForm editTodo={editTodo} id={id} task={task} toggleEditForm={toggle} /> :
             <>
             <Checkbox tabIndex={-1} checked={completed} onClick={() => toggleTodo(id)}/>
             <ListItemText style={{textDecoration: completed ? "line-through" : "none", width:"80%"}}>{task}</ListItemText>

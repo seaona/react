@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import AppBar from '@mui/material/AppBar';
@@ -6,31 +6,17 @@ import Toolbar from '@mui/material/Toolbar';
 import TodoList from "./TodoList";
 import TodoForm from "./TodoForm";
 import { Grid2 } from "@mui/material";
-import { v4 as uuid } from 'uuid';
+import useTodoState from "./hooks/useTodoState";
 
 function TodoApp() {
-    const initialTodos = [
-        { id: 1, task: "Clean Fishtank", completed:false },
-        { id: 2, task: "Wash Car", completed:true },
-        { id: 3, task: "Grow Beard", completed:false },
-    ]
+    const initialTodos = JSON.parse(window.localStorage.getItem("todos") || "[]");
 
-    const [todos, setTodos] = useState(initialTodos);
-    const addTodo = newTodoText => {
-        setTodos([...todos, { id: uuid(), task: newTodoText, completed: false }]);
-    }
+    const { todos, addTodo, removeTodo, toggleTodo, editTodo } = useTodoState(initialTodos);
 
-    const removeTodo = todoId => {
-        const updatedTodos = todos.filter(todo => todo.id !== todoId);
-        setTodos(updatedTodos);
-    }
-
-    const toggleTodo = todoId => {
-        const updatedTodos = todos.map(todo =>
-            todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
-        );
-        setTodos(updatedTodos);
-    }
+    // it will run anytime a component renders,when it changes TODO
+    useEffect(() => {
+        window.localStorage.setItem("todos", JSON.stringify(todos));
+    }, [todos]) // it will run only when todo changes
 
     return (
         <Paper style={{
@@ -57,6 +43,7 @@ function TodoApp() {
                         todos={todos}
                         removeTodo={removeTodo}
                         toggleTodo={toggleTodo}
+                        editTodo={editTodo}
                     />
                 </Grid2>
             </Grid2>

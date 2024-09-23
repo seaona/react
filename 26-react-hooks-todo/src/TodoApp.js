@@ -9,14 +9,11 @@ import { Grid2 } from "@mui/material";
 import useTodoState from "./hooks/useTodoState";
 
 function TodoApp() {
-    const initialTodos = JSON.parse(window.localStorage.getItem("todos") || "[]");
+    const initialTodos = [{id: 1, task: "Pet a Monkey", completed: false}];
 
     const { todos, addTodo, removeTodo, toggleTodo, editTodo } = useTodoState(initialTodos);
 
-    // it will run anytime a component renders,when it changes TODO
-    useEffect(() => {
-        window.localStorage.setItem("todos", JSON.stringify(todos));
-    }, [todos]) // it will run only when todo changes
+
 
     return (
         <Paper style={{

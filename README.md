@@ -175,6 +175,19 @@ function Food() {
   - `useEffect`: runs on every render
   - you can have multiple useEffects
 
+## 34. Context API
+- Each context has 2 pieces: the provider and the consumer
+- `const ThemeContext = createContext();`
+- `ThemeContext.Provider`: it's a component that we can wrap around any other component, and it will provide a value to all the children of that component
+- ```
+    <ThemeContext.Provider value={{ ...this.state, tastesLikeChicken: true }}>
+        {this.props.children}
+    </ThemeContext.Provider>
+    ```
+- `ThemeContext.Consumer`: it's a component that we can use to consume the value that is provided by the provider
+- Any of the children will have access to the value we pass. It's just 1 value per context
+
+
 ### Side Notes
 - **Window.localStorage**: we can only store strings
     - We can add items: `window.localStorage.setItem("color", "blue")`

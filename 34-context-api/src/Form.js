@@ -13,10 +13,35 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { withStyles } from '@mui/styles';
 import styles from './styles/FormStyles';
+import { LanguageContext } from './contexts/LanguageContext';
 
+const words = {
+    english: {
+        email: "Email",
+        signIn: "Sign In",
+        password: "Password",
+        remember: "Remember Me"
+    },
+    catalan: {
+        email: "Correu",
+        signIn: "Iniciar Sessió",
+        password: "Contrasenya",
+        remember: "Recorda'm"
+    },
+    spanish: {
+        email: "Correo",
+        signIn: "Iniciar Sesión",
+        password: "Contraseña",
+        remember: "Recuérdame"
+    }
+}
 class Form extends Component {
+    static contextType = LanguageContext;
+
     render() {
+        const { language, changeLanguage } = this.context;
         const { classes } = this.props;
+        const { email, signIn, password, remember } = words[language];
         return(
             <main className={classes.main}>
                 <Paper className={classes.paper}>
@@ -26,9 +51,9 @@ class Form extends Component {
                     <Typography
                         variant='h5'
                     >
-                        Sign In
+                        {signIn}
                     </Typography>
-                    <Select value="english">
+                    <Select value={language} onChange={changeLanguage}>
                         <MenuItem value="english">English</MenuItem>
                         <MenuItem value="catalan">Catalan</MenuItem>
                         <MenuItem value="spanish">Spanish</MenuItem>
@@ -39,7 +64,7 @@ class Form extends Component {
                             required
                             fullWidth
                         >
-                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <InputLabel htmlFor="email">{email}</InputLabel>
                             <Input id="email" name="email" autoFocus></Input>
                         </FormControl>
                         <FormControl
@@ -47,12 +72,12 @@ class Form extends Component {
                             required
                             fullWidth
                         >
-                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <InputLabel htmlFor="password">{password}</InputLabel>
                             <Input id="password" name="password"></Input>
                         </FormControl>
                         <FormControlLabel
                             control={<Checkbox color="primary" />}
-                            label="Remember me"
+                            label={remember}
                         />
                         <Button
                             variant="contained"
@@ -60,7 +85,7 @@ class Form extends Component {
                             fullWidth color="primary"
                             className={classes.submit}
                         >
-                            Sign In
+                            {signIn}
                         </Button>
                     </form>
                 </Paper>

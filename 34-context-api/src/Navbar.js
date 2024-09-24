@@ -8,15 +8,18 @@ import SearchIcon from '@mui/icons-material/Search';
 import Switch from '@mui/material/Switch';
 import { withStyles } from '@mui/styles';
 import styles from './styles/NavbarStyles';
-
+import { ThemeContext } from './contexts/ThemeContext';
 class Navbar extends Component {
+    static contextType = ThemeContext;
     render() {
+        const { isDarkMode, toggleTheme } = this.context;
+
         const { classes } = this.props;
         return (
             <div className={classes.root}>
                 <AppBar
                     position="static"
-                    color="primary"
+                    color={isDarkMode ? " default" : "primary"}
                 >
                     <Toolbar>
                         <IconButton
@@ -32,7 +35,7 @@ class Navbar extends Component {
                         >
                             App Title
                         </Typography>
-                        <Switch />
+                        <Switch onChange={toggleTheme}/>
                         <div className={classes.grow} />
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>

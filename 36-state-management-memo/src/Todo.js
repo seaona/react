@@ -1,4 +1,4 @@
-import React, { useContext, memo } from "react";
+import React, { useContext } from "react";
 import useToggleState from "./hooks/useToggleState";
 import EditTodoForm from "./EditTodoForm";
 import ListItem from "@material-ui/core/ListItem";
@@ -48,5 +48,4 @@ function Todo({ id, task, completed }) {
   );
 }
 
-// memo: to avoid re-renders when theprops didn't change, for functional components
-export default memo(Todo);
+export default Todo;

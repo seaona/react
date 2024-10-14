@@ -187,6 +187,10 @@ function Food() {
 - `ThemeContext.Consumer`: it's a component that we can use to consume the value that is provided by the provider
 - Any of the children will have access to the value we pass. It's just 1 value per context
 
+## 38. Webpack
+- index.js is the default entry point
+- it puts our minified code in a directory called dist
+
 
 ### Side Notes
 - **Window.localStorage**: we can only store strings
